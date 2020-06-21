@@ -3,19 +3,22 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-io.on('connection', (socket) =>{
+//io.sockets.adapter.rooms['my_room']; Quantas pessoas tem na sala
 
-    socket.on("PING", (pack)=>{
-        console.log(pack.message + "socket id: " + socket.id);
+io.on('connection', (socket)=>{
 
-        var json_pack = {message : "PONG"};
-        socket.emit('PONG', json_pack );
-    })  
+    socket.emit('SENDME_ID', {message : "Manda ID"})
+    console.log(io.engine.clientsCount);
+    socket.on('ID_CURRENT', (data)=>{
+        socket.id = data.id;
+        console.log('recebeu id')
+        console.log(socket.id)
+    })
+ 
 
-
-
-});
-
-http.listen(3000, ()=>{
-    console.log('## server ONN ##');
+    socket.on('disconnect', (data)=>{
+        console.log('disconnect');
+    })
 })
+
+http.listen(3000 || process.env.PORT ,()=> console.log('Servidor Online'))
