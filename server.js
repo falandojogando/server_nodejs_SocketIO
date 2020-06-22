@@ -5,6 +5,7 @@ const io = require('socket.io')(http);
 
 //io.sockets.adapter.rooms['my_room']; Quantas pessoas tem na sala // .sockets
 //io.engine.clientsCount // Quantos pessoas estão connectadas ao servidor
+//Object.keys(io.sockets.adapter.rooms['main'].sockets // CONVERTE EM OBJETO
 io.on('connection', (socket)=>{
 
     var currentroom = "";
